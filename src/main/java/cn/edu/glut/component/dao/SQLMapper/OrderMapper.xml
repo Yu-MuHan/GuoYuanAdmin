@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.glut.component.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.glut.model.Order" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="transaction_num" property="transactionNum" jdbcType="VARCHAR" />
+    <result column="payment_type" property="paymentType" jdbcType="INTEGER" />
+    <result column="post_fee" property="postFee" jdbcType="DECIMAL" />
+    <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="pay_state" property="payState" jdbcType="INTEGER" />
+    <result column="deliver_state" property="deliverState" jdbcType="INTEGER" />
+    <result column="payment_time" property="paymentTime" jdbcType="TIMESTAMP" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_mobile" property="receiverMobile" jdbcType="CHAR" />
+    <result column="receiver_address" property="receiverAddress" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="prefer_fee" property="preferFee" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, user_id, transaction_num, payment_type, post_fee, total_fee, payment, pay_state, 
+    deliver_state, payment_time, receiver_name, receiver_mobile, receiver_address, remark, 
+    prefer_fee, create_time, finish_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.glut.model.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.glut.model.OrderExample" >
+    delete from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.glut.model.Order" >
+    insert into order (order_id, user_id, transaction_num, 
+      payment_type, post_fee, total_fee, 
+      payment, pay_state, deliver_state, 
+      payment_time, receiver_name, receiver_mobile, 
+      receiver_address, remark, prefer_fee, 
+      create_time, finish_time)
+    values (#{orderId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{transactionNum,jdbcType=VARCHAR}, 
+      #{paymentType,jdbcType=INTEGER}, #{postFee,jdbcType=DECIMAL}, #{totalFee,jdbcType=DECIMAL}, 
+      #{payment,jdbcType=DECIMAL}, #{payState,jdbcType=INTEGER}, #{deliverState,jdbcType=INTEGER}, 
+      #{paymentTime,jdbcType=TIMESTAMP}, #{receiverName,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=CHAR}, 
+      #{receiverAddress,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{preferFee,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.glut.model.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="transactionNum != null" >
+        transaction_num,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="postFee != null" >
+        post_fee,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="payState != null" >
+        pay_state,
+      </if>
+      <if test="deliverState != null" >
+        deliver_state,
+      </if>
+      <if test="paymentTime != null" >
+        payment_time,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="receiverMobile != null" >
+        receiver_mobile,
+      </if>
+      <if test="receiverAddress != null" >
+        receiver_address,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="preferFee != null" >
+        prefer_fee,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="finishTime != null" >
+        finish_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionNum != null" >
+        #{transactionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="postFee != null" >
+        #{postFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=INTEGER},
+      </if>
+      <if test="deliverState != null" >
+        #{deliverState,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTime != null" >
+        #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        #{receiverMobile,jdbcType=CHAR},
+      </if>
+      <if test="receiverAddress != null" >
+        #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="preferFee != null" >
+        #{preferFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.glut.model.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.transactionNum != null" >
+        transaction_num = #{record.transactionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.postFee != null" >
+        post_fee = #{record.postFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payState != null" >
+        pay_state = #{record.payState,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliverState != null" >
+        deliver_state = #{record.deliverState,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentTime != null" >
+        payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiverName != null" >
+        receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverMobile != null" >
+        receiver_mobile = #{record.receiverMobile,jdbcType=CHAR},
+      </if>
+      <if test="record.receiverAddress != null" >
+        receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferFee != null" >
+        prefer_fee = #{record.preferFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishTime != null" >
+        finish_time = #{record.finishTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order
+    set order_id = #{record.orderId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      transaction_num = #{record.transactionNum,jdbcType=VARCHAR},
+      payment_type = #{record.paymentType,jdbcType=INTEGER},
+      post_fee = #{record.postFee,jdbcType=DECIMAL},
+      total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      payment = #{record.payment,jdbcType=DECIMAL},
+      pay_state = #{record.payState,jdbcType=INTEGER},
+      deliver_state = #{record.deliverState,jdbcType=INTEGER},
+      payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
+      receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_mobile = #{record.receiverMobile,jdbcType=CHAR},
+      receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      prefer_fee = #{record.preferFee,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      finish_time = #{record.finishTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.glut.model.Order" >
+    update order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionNum != null" >
+        transaction_num = #{transactionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="postFee != null" >
+        post_fee = #{postFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=INTEGER},
+      </if>
+      <if test="deliverState != null" >
+        deliver_state = #{deliverState,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTime != null" >
+        payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null" >
+        receiver_mobile = #{receiverMobile,jdbcType=CHAR},
+      </if>
+      <if test="receiverAddress != null" >
+        receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="preferFee != null" >
+        prefer_fee = #{preferFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.glut.model.Order" >
+    update order
+    set user_id = #{userId,jdbcType=INTEGER},
+      transaction_num = #{transactionNum,jdbcType=VARCHAR},
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      post_fee = #{postFee,jdbcType=DECIMAL},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      payment = #{payment,jdbcType=DECIMAL},
+      pay_state = #{payState,jdbcType=INTEGER},
+      deliver_state = #{deliverState,jdbcType=INTEGER},
+      payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_mobile = #{receiverMobile,jdbcType=CHAR},
+      receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      prefer_fee = #{preferFee,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

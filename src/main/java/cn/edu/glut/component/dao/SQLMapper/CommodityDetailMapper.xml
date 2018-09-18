@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.glut.component.dao.CommodityDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.glut.model.CommodityDetail" >
+    <id column="commodity_detai_id" property="commodityDetaiId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.glut.model.CommodityDetail" extends="BaseResultMap" >
+    <result column="commodity_desc" property="commodityDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commodity_detai_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    commodity_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.glut.model.CommodityDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commodity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.glut.model.CommodityDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commodity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commodity_detail
+    where commodity_detai_id = #{commodityDetaiId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from commodity_detail
+    where commodity_detai_id = #{commodityDetaiId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.glut.model.CommodityDetailExample" >
+    delete from commodity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.glut.model.CommodityDetail" >
+    insert into commodity_detail (commodity_detai_id, commodity_desc
+      )
+    values (#{commodityDetaiId,jdbcType=BIGINT}, #{commodityDesc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.glut.model.CommodityDetail" >
+    insert into commodity_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityDetaiId != null" >
+        commodity_detai_id,
+      </if>
+      <if test="commodityDesc != null" >
+        commodity_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityDetaiId != null" >
+        #{commodityDetaiId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityDesc != null" >
+        #{commodityDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.glut.model.CommodityDetailExample" resultType="java.lang.Integer" >
+    select count(*) from commodity_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commodity_detail
+    <set >
+      <if test="record.commodityDetaiId != null" >
+        commodity_detai_id = #{record.commodityDetaiId,jdbcType=BIGINT},
+      </if>
+      <if test="record.commodityDesc != null" >
+        commodity_desc = #{record.commodityDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update commodity_detail
+    set commodity_detai_id = #{record.commodityDetaiId,jdbcType=BIGINT},
+      commodity_desc = #{record.commodityDesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commodity_detail
+    set commodity_detai_id = #{record.commodityDetaiId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.glut.model.CommodityDetail" >
+    update commodity_detail
+    <set >
+      <if test="commodityDesc != null" >
+        commodity_desc = #{commodityDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where commodity_detai_id = #{commodityDetaiId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.glut.model.CommodityDetail" >
+    update commodity_detail
+    set commodity_desc = #{commodityDesc,jdbcType=LONGVARCHAR}
+    where commodity_detai_id = #{commodityDetaiId,jdbcType=BIGINT}
+  </update>
+</mapper>

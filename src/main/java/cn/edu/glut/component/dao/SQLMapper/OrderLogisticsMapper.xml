@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.glut.component.dao.OrderLogisticsMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.glut.model.OrderLogistics" >
+    <id column="orderlogistics_id" property="orderlogisticsId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="express_no" property="expressNo" jdbcType="BIGINT" />
+    <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+    <result column="orderlogistics_status" property="orderlogisticsStatus" jdbcType="VARCHAR" />
+    <result column="logistics_create_time" property="logisticsCreateTime" jdbcType="TIMESTAMP" />
+    <result column="logistics_update_time" property="logisticsUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="logistics_settlement_time" property="logisticsSettlementTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderlogistics_id, order_id, express_no, logistics_name, orderlogistics_status, logistics_create_time, 
+    logistics_update_time, logistics_settlement_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.glut.model.OrderLogisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_logistics
+    where orderlogistics_id = #{orderlogisticsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_logistics
+    where orderlogistics_id = #{orderlogisticsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.glut.model.OrderLogisticsExample" >
+    delete from order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.glut.model.OrderLogistics" >
+    insert into order_logistics (orderlogistics_id, order_id, express_no, 
+      logistics_name, orderlogistics_status, logistics_create_time, 
+      logistics_update_time, logistics_settlement_time
+      )
+    values (#{orderlogisticsId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, #{expressNo,jdbcType=BIGINT}, 
+      #{logisticsName,jdbcType=VARCHAR}, #{orderlogisticsStatus,jdbcType=VARCHAR}, #{logisticsCreateTime,jdbcType=TIMESTAMP}, 
+      #{logisticsUpdateTime,jdbcType=TIMESTAMP}, #{logisticsSettlementTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.glut.model.OrderLogistics" >
+    insert into order_logistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderlogisticsId != null" >
+        orderlogistics_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="expressNo != null" >
+        express_no,
+      </if>
+      <if test="logisticsName != null" >
+        logistics_name,
+      </if>
+      <if test="orderlogisticsStatus != null" >
+        orderlogistics_status,
+      </if>
+      <if test="logisticsCreateTime != null" >
+        logistics_create_time,
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        logistics_update_time,
+      </if>
+      <if test="logisticsSettlementTime != null" >
+        logistics_settlement_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderlogisticsId != null" >
+        #{orderlogisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="expressNo != null" >
+        #{expressNo,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsName != null" >
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderlogisticsStatus != null" >
+        #{orderlogisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreateTime != null" >
+        #{logisticsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsSettlementTime != null" >
+        #{logisticsSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.glut.model.OrderLogisticsExample" resultType="java.lang.Integer" >
+    select count(*) from order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_logistics
+    <set >
+      <if test="record.orderlogisticsId != null" >
+        orderlogistics_id = #{record.orderlogisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressNo != null" >
+        express_no = #{record.expressNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.logisticsName != null" >
+        logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderlogisticsStatus != null" >
+        orderlogistics_status = #{record.orderlogisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsCreateTime != null" >
+        logistics_create_time = #{record.logisticsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logisticsUpdateTime != null" >
+        logistics_update_time = #{record.logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logisticsSettlementTime != null" >
+        logistics_settlement_time = #{record.logisticsSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_logistics
+    set orderlogistics_id = #{record.orderlogisticsId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      express_no = #{record.expressNo,jdbcType=BIGINT},
+      logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
+      orderlogistics_status = #{record.orderlogisticsStatus,jdbcType=VARCHAR},
+      logistics_create_time = #{record.logisticsCreateTime,jdbcType=TIMESTAMP},
+      logistics_update_time = #{record.logisticsUpdateTime,jdbcType=TIMESTAMP},
+      logistics_settlement_time = #{record.logisticsSettlementTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.glut.model.OrderLogistics" >
+    update order_logistics
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="expressNo != null" >
+        express_no = #{expressNo,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsName != null" >
+        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderlogisticsStatus != null" >
+        orderlogistics_status = #{orderlogisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreateTime != null" >
+        logistics_create_time = #{logisticsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsSettlementTime != null" >
+        logistics_settlement_time = #{logisticsSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where orderlogistics_id = #{orderlogisticsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.glut.model.OrderLogistics" >
+    update order_logistics
+    set order_id = #{orderId,jdbcType=BIGINT},
+      express_no = #{expressNo,jdbcType=BIGINT},
+      logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      orderlogistics_status = #{orderlogisticsStatus,jdbcType=VARCHAR},
+      logistics_create_time = #{logisticsCreateTime,jdbcType=TIMESTAMP},
+      logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      logistics_settlement_time = #{logisticsSettlementTime,jdbcType=TIMESTAMP}
+    where orderlogistics_id = #{orderlogisticsId,jdbcType=INTEGER}
+  </update>
+</mapper>
