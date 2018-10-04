@@ -80,4 +80,19 @@ public class Admin {
     public void setPhoto(String photo) {
         this.photo = photo == null ? null : photo.trim();
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if(account==null||pwd==null) return false;
+		
+		if(obj instanceof Admin) {
+			Admin tobj=(Admin)obj;
+			if(account.equals(tobj.getAccount())&&pwd.equals(tobj.getPwd())){
+				return true;
+			}
+		}
+		return false;
+	}
+    
+    
 }
