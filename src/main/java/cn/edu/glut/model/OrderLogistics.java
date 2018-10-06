@@ -7,7 +7,7 @@ public class OrderLogistics {
 
     private Long orderId;
 
-    private Long expressNo;
+    private String expressNo;
 
     private String logisticsName;
 
@@ -35,12 +35,12 @@ public class OrderLogistics {
         this.orderId = orderId;
     }
 
-    public Long getExpressNo() {
+    public String getExpressNo() {
         return expressNo;
     }
 
-    public void setExpressNo(Long expressNo) {
-        this.expressNo = expressNo;
+    public void setExpressNo(String expressNo) {
+        this.expressNo = expressNo == null ? null : expressNo.trim();
     }
 
     public String getLogisticsName() {

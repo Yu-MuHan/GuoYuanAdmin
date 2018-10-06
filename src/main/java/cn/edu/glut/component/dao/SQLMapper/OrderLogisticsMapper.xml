@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.edu.glut.model.OrderLogistics" >
     <id column="orderlogistics_id" property="orderlogisticsId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
-    <result column="express_no" property="expressNo" jdbcType="BIGINT" />
+    <result column="express_no" property="expressNo" jdbcType="CHAR" />
     <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
     <result column="orderlogistics_status" property="orderlogisticsStatus" jdbcType="VARCHAR" />
     <result column="logistics_create_time" property="logisticsCreateTime" jdbcType="TIMESTAMP" />
@@ -108,7 +108,7 @@
       logistics_name, orderlogistics_status, logistics_create_time, 
       logistics_update_time, logistics_settlement_time
       )
-    values (#{orderlogisticsId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, #{expressNo,jdbcType=BIGINT}, 
+    values (#{orderlogisticsId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, #{expressNo,jdbcType=CHAR}, 
       #{logisticsName,jdbcType=VARCHAR}, #{orderlogisticsStatus,jdbcType=VARCHAR}, #{logisticsCreateTime,jdbcType=TIMESTAMP}, 
       #{logisticsUpdateTime,jdbcType=TIMESTAMP}, #{logisticsSettlementTime,jdbcType=TIMESTAMP}
       )
@@ -149,7 +149,7 @@
         #{orderId,jdbcType=BIGINT},
       </if>
       <if test="expressNo != null" >
-        #{expressNo,jdbcType=BIGINT},
+        #{expressNo,jdbcType=CHAR},
       </if>
       <if test="logisticsName != null" >
         #{logisticsName,jdbcType=VARCHAR},
@@ -184,7 +184,7 @@
         order_id = #{record.orderId,jdbcType=BIGINT},
       </if>
       <if test="record.expressNo != null" >
-        express_no = #{record.expressNo,jdbcType=BIGINT},
+        express_no = #{record.expressNo,jdbcType=CHAR},
       </if>
       <if test="record.logisticsName != null" >
         logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
     update order_logistics
     set orderlogistics_id = #{record.orderlogisticsId,jdbcType=INTEGER},
       order_id = #{record.orderId,jdbcType=BIGINT},
-      express_no = #{record.expressNo,jdbcType=BIGINT},
+      express_no = #{record.expressNo,jdbcType=CHAR},
       logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
       orderlogistics_status = #{record.orderlogisticsStatus,jdbcType=VARCHAR},
       logistics_create_time = #{record.logisticsCreateTime,jdbcType=TIMESTAMP},
@@ -227,7 +227,7 @@
         order_id = #{orderId,jdbcType=BIGINT},
       </if>
       <if test="expressNo != null" >
-        express_no = #{expressNo,jdbcType=BIGINT},
+        express_no = #{expressNo,jdbcType=CHAR},
       </if>
       <if test="logisticsName != null" >
         logistics_name = #{logisticsName,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.edu.glut.model.OrderLogistics" >
     update order_logistics
     set order_id = #{orderId,jdbcType=BIGINT},
-      express_no = #{expressNo,jdbcType=BIGINT},
+      express_no = #{expressNo,jdbcType=CHAR},
       logistics_name = #{logisticsName,jdbcType=VARCHAR},
       orderlogistics_status = #{orderlogisticsStatus,jdbcType=VARCHAR},
       logistics_create_time = #{logisticsCreateTime,jdbcType=TIMESTAMP},
